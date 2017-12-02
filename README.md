@@ -2,10 +2,10 @@
 
 > Proyecto sobre historiales de historiales medicos
 > Usefull links: 
-. [Tutorial Vue](https://vuejs.org/v2/guide/)
-. [ES6 classes](http://ccoenraets.github.io/es6-tutorial/classes/)
-.[ES6 promises](http://ccoenraets.github.io/es6-tutorial/promises/)
-.[Don't fear the npm](https://docs.npmjs.com/getting-started/what-is-npm)
+* [Tutorial Vue](https://vuejs.org/v2/guide/)
+* [ES6 classes](http://ccoenraets.github.io/es6-tutorial/classes/)
+* [ES6 promises](http://ccoenraets.github.io/es6-tutorial/promises/)
+* [Don't fear the npm](https://docs.npmjs.com/getting-started/what-is-npm)
 
 ## Build Setup
 
