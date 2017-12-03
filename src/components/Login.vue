@@ -1,8 +1,10 @@
 <template>
   <div class="login">
-      <form>
-        <input type="email" name="email" id="email">
-        <input type="password" name="pass" id="pass">
+      <form @submit.prevent="addUser">
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" v-model="user.email">
+        <label for="pass">Password</label>
+        <input type="password" name="pass" id="pass" v-model="user.pass">
         <button type="submit">
           Login
         </button>
@@ -12,7 +14,28 @@
 
 <script>
 export default {
-  name: 'Login'
+  name: 'Login',
+  data () {
+    return {
+      user: {
+        email: '',
+        pass: ''
+      } 
+    }
+  },
+  methods: {
+    addUser () {
+      firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // ...
+      });
+    }
+  },
+  mounted () {
+    console.log('ok');
+  }
 }
 </script>
 
