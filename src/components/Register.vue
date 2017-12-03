@@ -2,7 +2,7 @@
   <div class="login">
     <div class="w3-card login-form">  
       <header class="w3-container w3-blue">
-        <h1>Login</h1>
+        <h1>Registro</h1>
       </header>
       <div class="w3-container">
         <form @submit.prevent="addUser">
@@ -10,8 +10,8 @@
           <input type="email" name="email" id="email" v-model="user.email">
           <label for="pass">Password</label>
           <input type="password" name="pass" id="pass" v-model="user.pass">
-          <button type="submit">  Login</button>
-          <a @click.prevent="goToRegister">Aún sin cuenta, crea una.</a>
+          <button type="submit">Registrarse</button>
+          <a @click.prevent="goToLogin">Ya tengo una cuenta.</a>
         </form>
       </div>
     </div>
@@ -39,8 +39,8 @@ export default {
         // ...
       });
     },
-    goToRegister () {
-      this.$router.push({name: 'Register'});
+    goToLogin () {
+      this.$router.push({name : 'Login'});
     }
   },
   props: [
@@ -83,21 +83,21 @@ export default {
 }
 
 input{
-  display: box;
+  display: block;
   width: 100%;
   margin-top: 10px;
   margin-bottom: 5px;
 }
 button{
-  display: box;
+  display: block;
   margin-bottom: 5px;
 }
 
 a{
   width: 100%;
   display: block;
-  cursor: pointer;
   text-decoration: underline;
+  cursor: pointer;
   text-align: center;
 }
 a:hover{
