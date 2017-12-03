@@ -25,7 +25,8 @@ export default {
   },
   methods: {
     addUser () {
-      firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+      let vm = this;
+      vm.app.auth().createUserWithEmailAndPassword(vm.user.email, vm.user.pass).catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
@@ -33,8 +34,25 @@ export default {
       });
     }
   },
+  props: [
+    'app'
+  ],
   mounted () {
-    console.log('ok');
+    let vm = this;
+    vm.app.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        // User is signed in.
+        console.log('Sign In');
+        vm.app.auth().signOut()
+          .then(function() {
+            console.log('Sign Out');
+          })
+          .catch(error => console.log('error = ' + error.message));
+      } else {
+        // User is signed out.
+        // ...
+      }
+    });
   }
 }
 </script>

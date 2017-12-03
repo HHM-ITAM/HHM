@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view :app="app"/>
   </div>
 </template>
 
@@ -21,7 +21,12 @@ let db = app.database()
 
 
 export default {
-  name: 'app'
+  name: 'app',
+  data () {
+    return {
+      app: app
+    }
+  }
 }
 </script> 
 
