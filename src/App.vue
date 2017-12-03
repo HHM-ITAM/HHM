@@ -1,32 +1,13 @@
 <template>
   <div id="app">
-    <router-view :app="app"/>
+    <router-view/>
   </div>
 </template>
 
 <script>
 
-import Firebase from 'firebase'
-let config = {
-    apiKey: "AIzaSyAmvXGeHW_UURXQ1F-o4r4xfDwSpVGen48",
-    authDomain: "hhm-software.firebaseapp.com",
-    databaseURL: "https://hhm-software.firebaseio.com",
-    projectId: "hhm-software",
-    storageBucket: "",
-    messagingSenderId: "600530060886"
-  };
-  
-let app = Firebase.initializeApp(config)
-let db = app.database()
-
-
 export default {
-  name: 'app',
-  data () {
-    return {
-      app: app
-    }
-  }
+  name: 'app'
 }
 </script> 
 

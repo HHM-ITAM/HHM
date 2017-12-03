@@ -1,6 +1,6 @@
 <template>
-  <div class="login">
-    <div class="w3-card login-form">  
+  <div class="register">
+    <div class="w3-card register-form">  
       <header class="w3-container w3-blue">
         <h1>Registro</h1>
       </header>
@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import firebase from 'firebase';
+
 export default {
   name: 'Login',
   data () {
@@ -32,7 +34,9 @@ export default {
   methods: {
     addUser () {
       let vm = this;
-      vm.app.auth().createUserWithEmailAndPassword(vm.user.email, vm.user.pass).catch(function(error) {
+      firebase.auth().createUserWithEmailAndPassword(vm.user.email, vm.user.pass)
+      .then(user => this.$router.push({name: 'Home'}))
+      .catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
@@ -42,33 +46,13 @@ export default {
     goToLogin () {
       this.$router.push({name : 'Login'});
     }
-  },
-  props: [
-    'app'
-  ],
-  mounted () {
-    let vm = this;
-    vm.app.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        // User is signed in.
-        console.log('Sign In');
-        vm.app.auth().signOut()
-          .then(function() {
-            console.log('Sign Out');
-          })
-          .catch(error => console.log('error = ' + error.message));
-      } else {
-        // User is signed out.
-        // ...
-      }
-    });
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.login{
+.register{
   margin: 0;
   padding: 0;
   height: 100%;
@@ -77,7 +61,7 @@ export default {
   justify-content: center;
 }
 
-.login-form{
+.register-form{
   align-self: center;
   width: 250px;
 }

@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import firebase from 'firebase';
+
 export default {
   name: 'Login',
   data () {
@@ -32,7 +34,9 @@ export default {
   methods: {
     addUser () {
       let vm = this;
-      vm.app.auth().createUserWithEmailAndPassword(vm.user.email, vm.user.pass).catch(function(error) {
+      firebase.auth().signInWithEmailAndPassword(vm.user.email, vm.user.pass)
+      .then((user) => vm.$router.push({name: 'Home'}))
+      .catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
@@ -42,26 +46,6 @@ export default {
     goToRegister () {
       this.$router.push({name: 'Register'});
     }
-  },
-  props: [
-    'app'
-  ],
-  mounted () {
-    let vm = this;
-    vm.app.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        // User is signed in.
-        console.log('Sign In');
-        vm.app.auth().signOut()
-          .then(function() {
-            console.log('Sign Out');
-          })
-          .catch(error => console.log('error = ' + error.message));
-      } else {
-        // User is signed out.
-        // ...
-      }
-    });
   }
 }
 </script>
