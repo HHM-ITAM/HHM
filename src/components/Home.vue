@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <h1>HOME</h1>
+    <button @click.prevent="logOut"></button>
   </div>
 </template>
 
@@ -10,6 +11,11 @@ import firebase from 'firebase';
 export default {
   name: 'Home',
   methods: {
+    logOut () {
+      firebase.auth().signOut()
+      .then(() => this.$router.push({name: 'Login'}))
+      .catch((error) => this.logOut());
+    }
   },
   mounted () {
     let currentUser = firebase.auth().currentUser;

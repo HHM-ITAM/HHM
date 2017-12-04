@@ -6,6 +6,7 @@
       </header>
       <div class="w3-container">
         <form @submit.prevent="addUser">
+          <p class="error">{{error}}</p>
           <label for="email">Email:</label>
           <input type="email" name="email" id="email" v-model="user.email">
           <label for="pass">Password</label>
@@ -28,7 +29,8 @@ export default {
       user: {
         email: '',
         pass: ''
-      } 
+      },
+      error: ''
     }
   },
   methods: {
@@ -40,7 +42,8 @@ export default {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
-        console.log(errorMessage);
+        vm.error = errorMessage;
+        vm.user.pass = '';
       });
     },
     goToRegister () {
@@ -86,5 +89,10 @@ a{
 }
 a:hover{
   color: blue;
+}
+
+.error{
+  color: red;
+  text-decoration: underline;
 }
 </style>

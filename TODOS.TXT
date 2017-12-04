@@ -1,0 +1,5 @@
+1.- Login => checkUserType => RedirectToHome
+
+El user puede ser médico, paciente o admin: make conditional routing!!
+
+2.- Make home for every user
