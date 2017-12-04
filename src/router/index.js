@@ -2,10 +2,13 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/Login'
 import Home from '@/components/Home'
+//PACIENTE
 import Paciente from '@/components/Paciente'
+//MEDICO
 import Medico from '@/components/Medico'
 import MedicoMenu from '@/components/MedicoMenu'
 import MedicoRegister from '@/components/MedicoRegister'
+import MedicoModificar from '@/components/MedicoModificar'
 import firebase from 'firebase'
 
 Vue.use(Router)
@@ -57,6 +60,14 @@ let router = new Router({
               path: '/Menu',
               name: 'MedicoMenu',
               component: MedicoMenu,
+              meta: {
+                requiresAuth: true
+              }
+            },
+            {
+              path: '/MoficaPaciente',
+              name: 'MedicoModificar',
+              component: MedicoModificar,
               meta: {
                 requiresAuth: true
               }

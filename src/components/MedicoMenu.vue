@@ -2,7 +2,7 @@
   <div class="medico-menu">
     <div class="opciones w3-padding">
       <button class="w3-btn w3-green opcion w3-round" @click.prevent="goToRegister">Registrar Paciente</button>
-      <button class="w3-btn w3-grey w3-text-white opcion w3-round">Modificar Paciente</button>
+      <button class="w3-btn w3-grey w3-text-white opcion w3-round" @click.prevent="goToModificar">Modificar Paciente</button>
       <button class="w3-btn w3-green opcion w3-round">Nuevo Historial</button>
       <button class="w3-btn w3-grey w3-text-white opcion w3-round">Consulta Historial</button>
       <button class="w3-btn w3-green opcion w3-round">Modifica Historial</button>
@@ -23,6 +23,9 @@ export default {
   methods: {
     goToRegister () {
       this.$router.push({name: 'MedicoRegister'});
+    },
+    goToModificar () {
+      this.$router.push({name: 'MedicoModificar'});
     }
   },
   mounted () {
