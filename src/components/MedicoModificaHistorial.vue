@@ -1,16 +1,24 @@
 <template>
-  <div class="medico-crea-historial">
+  <div class="medico-modifica-historial">
     <div class="w3-card register-form">
       <button class="w3-btn w3-red regresar" @click.prevent="goBack">Regresar</button>  
       <header class="w3-container w3-blue header">
-        <h1>Nuevo Historial</h1>
+        <h1>Consulta Historial</h1>
       </header>
-      <div class="w3-container form" v-if="paciente">
-        <form @submit.prevent="creaHistorial">
+      <div class="historiales" v-if="paciente && !busca">
+        <div class="historial w3-border w3-border-grey" v-for="(hist, index) in historiales" :key="index">
+          <p class="w3-left">{{hist.fecha}}</p>
+          <button class="w3-button w3-grey w3-text-white w3-right w3-round" @click.prevent="revisa(hist)">Revisar</button>
+        </div>
+      </div>
+      <div class="w3-container form" v-if="busca">
+        <form>
           <p v-if="error" class="error">{{error}}</p>
+          <label for="fecha">Fecha:</label>
+          <input type="text" name="fecha" id="fecha" v-model="historial.fecha" disabled>
           <label for="notas">Notas:</label>
           <input type="text" name="notas" id="notas" v-model="historial.notas">
-          <button type="submit" class="w3-btn w3-blue w3-block">Crear Historial</button>
+          <button class="w3-button w3-grey w3-text-white w3-right w3-round" @click.prevent="modificaHistorial">Revisar</button>
         </form>
       </div>
       <div class="w3-container form" v-if="!paciente">
@@ -42,14 +50,46 @@ export default {
         notas: '',
         fecha: '',
         doctor: ''
-      }
+      },
+      historiales : [],
+      busca: false
     }
   },
   methods: {
+    modificaHistorial () {
+      let vm = this;
+      let user = vm.data;
+      let date = Date();
+      let ref = firebase.database().ref('Historiales/' + vm.paciente.uuid + '/' + vm.historial.id + '/');
+      let historial = {
+        doctor: user.uuid,
+        fecha: date,
+        notas: vm.historial.notas
+      }
+      ref.set(historial);
+      vm.goBack();
+    },
+    revisa (hist) {
+      let vm = this;
+      let uid = vm.paciente.uuid;
+      vm.historial.id = hist.key;
+      let db = firebase.database().ref('Historiales/' + uid + '/' + hist.key + '/');
+      let ref = db.once('value')
+      .then(snap => {
+        vm.historial = snap.val();
+        vm.busca = true;
+      })
+      .catch(error => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        vm.error = errorMessage;
+      });
+    },
     creaHistorial () {
       let vm = this;
       let user = vm.data;
       let date = Date();
+      console.log(date);
       let ref = firebase.database().ref('Historiales/' + vm.paciente.uuid + '/').push();
       let historial = {
         doctor: user.uuid,
@@ -77,6 +117,30 @@ export default {
           }
         });
         if(!vm.paciente) vm.error = 'No existe ese paciente';
+        else {
+          vm.message = '';
+          firebase.database().ref('Historiales').once('value')
+          .then(snap => {
+            snap.forEach(el => {
+              let data = el.val();
+              if(el.key === vm.paciente.uuid) {
+                let i;
+                for(i in data)
+                {
+                  let h = data[i];
+                  h.key = i;
+                  vm.historiales.push(h);
+                }
+                //data.forEach(historial => vm.historiales.push(historial));
+              }
+              else vm.historiales = null;
+            });
+            //No historiales, o historiales message
+            if(!vm.historiales) vm.message = 'No existe aún ningún historial.';
+            else vm.message = '';
+          })
+          .catch(error => console.log(error.message));
+        }
       })
       .catch(error => {
         var errorCode = error.code;
@@ -93,7 +157,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.medico-crea-historial{
+.medico-modifica-historial{
   margin: 0;
   padding: 0;
   height: 100%;
@@ -150,6 +214,20 @@ a:hover{
 .error{
   color: red;
   text-decoration: underline;
+}
+
+.historiales{
+  height: 100%;
+}
+.historial{
+  height: 100px;
+  padding: 1px 10px 1px;
+}
+.historial p {
+  height: 40px;
+  width: 60%;
+  margin: 0;
+  padding: 8px 16px;
 }
 
 @media only screen and (max-width: 750px) {

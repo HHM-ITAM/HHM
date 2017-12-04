@@ -5,7 +5,7 @@
       <button class="w3-btn w3-grey w3-text-white opcion w3-round" @click.prevent="goToModificar">Modificar Paciente</button>
       <button class="w3-btn w3-green opcion w3-round" @click.prevent="goToCrearHistorial">Nuevo Historial</button>
       <button class="w3-btn w3-grey w3-text-white opcion w3-round" @click.prevent="goToConsultaHistorial">Consulta Historial</button>
-      <button class="w3-btn w3-green opcion w3-round">Modifica Historial</button>
+      <button class="w3-btn w3-green opcion w3-round" @click.prevent="goToModificaHistorial">Modifica Historial</button>
     </div>
   </div>
 </template>
@@ -32,6 +32,9 @@ export default {
     },
     goToConsultaHistorial () {
       this.$router.push({name: 'MedicoConsultaHistorial'});
+    },
+    goToModificaHistorial () {
+      this.$router.push({name: 'MedicoModificaHistorial'});
     }
   },
   mounted () {

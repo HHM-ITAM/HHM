@@ -11,6 +11,7 @@ import MedicoRegister from '@/components/MedicoRegister'
 import MedicoModificar from '@/components/MedicoModificar'
 import MedicoCreaHistorial from '@/components/MedicoCreaHistorial'
 import MedicoConsultaHistorial from '@/components/MedicoConsultaHistorial'
+import MedicoModificaHistorial from '@/components/MedicoModificaHistorial'
 import firebase from 'firebase'
 
 Vue.use(Router)
@@ -86,6 +87,14 @@ let router = new Router({
               path: '/ConsultaHistorial',
               name: 'MedicoConsultaHistorial',
               component: MedicoConsultaHistorial,
+              meta: {
+                requiresAuth: true
+              }
+            },
+            {
+              path: '/ModificaHistorial',
+              name: 'MedicoModificaHistorial',
+              component: MedicoModificaHistorial,
               meta: {
                 requiresAuth: true
               }
