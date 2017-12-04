@@ -203,6 +203,7 @@ a:hover{
 
 .historiales{
   height: 100%;
+  overflow-y: auto;
 }
 .historial{
   height: 100px;
