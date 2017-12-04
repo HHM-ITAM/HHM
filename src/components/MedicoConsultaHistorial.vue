@@ -12,11 +12,12 @@
         </div>
       </div>
       <div class="w3-container form" v-if="busca">
-        <form @submit.prevent="creaHistorial">
+        <form>
           <p v-if="error" class="error">{{error}}</p>
+          <label for="fecha">Fecha:</label>
+          <input type="text" name="fecha" id="fecha" v-model="historial.fecha" disabled>
           <label for="notas">Notas:</label>
-          <input type="text" name="notas" id="notas" v-model="historial.notas">
-          <button type="submit" class="w3-btn w3-blue w3-block">Crear Historial</button>
+          <input type="text" name="notas" id="notas" v-model="historial.notas" disabled>
         </form>
       </div>
       <div class="w3-container form" v-if="!paciente">
@@ -56,7 +57,18 @@ export default {
   methods: {
     revisa (hist) {
       let vm = this;
-      let db = firebase.database().ref('Pacientes/');
+      let uid = vm.paciente.uuid;
+      let db = firebase.database().ref('Historiales/' + uid + '/' + hist.key + '/');
+      let ref = db.once('value')
+      .then(snap => {
+        vm.historial = snap.val();
+        vm.busca = true;
+      })
+      .catch(error => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        vm.error = errorMessage;
+      });
     },
     creaHistorial () {
       let vm = this;
