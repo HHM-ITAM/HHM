@@ -62,6 +62,8 @@ export default {
             case 'm':
               vm.$router.push({name: 'Medico'});
               break;
+            default:
+              vm.logOut();
           }
         }
       })

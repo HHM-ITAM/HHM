@@ -36,8 +36,14 @@ export default {
       .then(snap => {
         snap.forEach(el => {
           let data = el.val();
-          data.forEach(historial => console.log(historial.fecha))
-          if(el.key === vm.data.uuid) data.forEach(historial => vm.historiales.push(historial))
+          if(el.key === vm.data.uuid) {
+            let i;
+            for(i in data)
+            {
+              vm.historiales.push(data[i]);
+            }
+            //data.forEach(historial => vm.historiales.push(historial));
+          }
           else vm.historiales = null;
           console.log(vm.historiales)
         });
@@ -67,11 +73,12 @@ export default {
   height: 100%;
 }
 .historial{
-  height: 42px;
+  height: 100px;
   padding: 1px 10px 1px;
 }
 .historial p {
   height: 40px;
+  width: 60%;
   margin: 0;
   padding: 8px 16px;
 }
