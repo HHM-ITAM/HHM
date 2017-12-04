@@ -60,11 +60,12 @@ export default {
       let vm = this;
       let user = vm.data;
       let date = Date();
-      let ref = firebase.database().ref('Historiales/' + vm.paciente.uuid + '/' + vm.historial.id + '/');
+      let ref = firebase.database().ref('Historiales/' + vm.paciente.uuid + '/').push();
       let historial = {
         doctor: user.uuid,
         fecha: date,
-        notas: vm.historial.notas
+        notas: vm.historial.notas,
+        modified: vm.historial.key
       }
       ref.set(historial);
       vm.goBack();
@@ -77,6 +78,7 @@ export default {
       let ref = db.once('value')
       .then(snap => {
         vm.historial = snap.val();
+        vm.historial.key = hist.key;
         vm.busca = true;
       })
       .catch(error => {
@@ -84,20 +86,6 @@ export default {
         var errorMessage = error.message;
         vm.error = errorMessage;
       });
-    },
-    creaHistorial () {
-      let vm = this;
-      let user = vm.data;
-      let date = Date();
-      console.log(date);
-      let ref = firebase.database().ref('Historiales/' + vm.paciente.uuid + '/').push();
-      let historial = {
-        doctor: user.uuid,
-        fecha: date,
-        notas: vm.historial.notas
-      }
-      ref.set(historial);
-      vm.goBack();
     },
     buscaPaciente () {
       let db = firebase.database().ref('Pacientes/');

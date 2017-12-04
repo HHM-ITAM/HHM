@@ -1,12 +1,20 @@
 <template>
   <div class="paciente">
     <p v-if="message" class="message">{{message}}</p>
-    <div class="historiales">
+    <div class="historiales" v-if="!busca">
       <div class="historial w3-border w3-border-grey" v-for="(historial, index) in historiales" :key="index">
         <p class="w3-left">{{historial.fecha}}</p>
-        <button class="w3-button w3-grey w3-text-white w3-right w3-round">Revisar</button>
+        <button class="w3-button w3-grey w3-text-white w3-right w3-round"@click.prevent="revisa(historial)">Revisar</button>
       </div>
     </div>
+    <div class="w3-container form" v-if="busca">
+        <form>
+          <label for="fecha">Fecha:</label>
+          <input type="text" name="fecha" id="fecha" v-model="historial.fecha" disabled>
+          <label for="notas">Notas:</label>
+          <input type="text" name="notas" id="notas" v-model="historial.notas" disabled>
+        </form>
+      </div>
   </div>
 </template>
 
@@ -19,10 +27,25 @@ export default {
   data () {
     return {
       historiales: [],
-      message: ''
+      message: '',
+      busca: false
     }
   },
   methods: {
+    revisa (hist) {
+      let vm = this;
+      let db = firebase.database().ref('Historiales/' + vm.data.uuid + '/' + hist.key + '/');
+      let ref = db.once('value')
+      .then(snap => {
+        vm.historial = snap.val();
+        vm.busca = true;
+      })
+      .catch(error => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        vm.error = errorMessage;
+      });
+    }
   },
   mounted () {
     let vm = this;
@@ -40,12 +63,13 @@ export default {
             let i;
             for(i in data)
             {
-              vm.historiales.push(data[i]);
+              let h = data[i];
+              h.key = i;
+              vm.historiales.push(h);
             }
             //data.forEach(historial => vm.historiales.push(historial));
           }
           else vm.historiales = null;
-          console.log(vm.historiales)
         });
         //No historiales, o historiales message
         if(!vm.historiales) vm.message = 'No existe aún ningún historial.';
@@ -81,5 +105,26 @@ export default {
   width: 60%;
   margin: 0;
   padding: 8px 16px;
+}
+
+form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+label{
+  font-size: 30px;
+}
+input{
+  height: 50px;
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+button{
+  display: block;
+  margin-bottom: 5px;
 }
 </style>
