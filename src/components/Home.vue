@@ -62,6 +62,9 @@ export default {
             case 'm':
               vm.$router.push({name: 'Medico'});
               break;
+            case 'a':
+              vm.$router.push({name: 'Admin'});
+              break;
             default:
               vm.logOut();
           }

@@ -12,6 +12,10 @@ import MedicoModificar from '@/components/MedicoModificar'
 import MedicoCreaHistorial from '@/components/MedicoCreaHistorial'
 import MedicoConsultaHistorial from '@/components/MedicoConsultaHistorial'
 import MedicoModificaHistorial from '@/components/MedicoModificaHistorial'
+//ADMIN
+import Admin from '@/components/Admin'
+import AdminMenu from '@/components/AdminMenu'
+
 import firebase from 'firebase'
 
 Vue.use(Router)
@@ -36,12 +40,15 @@ let router = new Router({
         requiresAuth: true
       },
       children: [
+        //=========================================
         //PACIENTE
         {
           path: '/Paciente',
           name: 'Paciente',
           component: Paciente
-        },
+        },//END PACIENTE
+        //=========================================
+        //=========================================
         //MEDICO
         {
           path: '/Medico',
@@ -100,9 +107,40 @@ let router = new Router({
               }
             }
           ]
-        }
+        },//END MEDICO
+        //=========================================
+        //=========================================
+        //ADMIN
+        {
+          path: '/Admin',
+          name: 'Admin',
+          component: Admin,
+          meta: {
+            requiresAuth: true
+          },
+          children: [
+            {
+              path: '/Menu',
+              name: 'AdminMenu',
+              component: AdminMenu,
+              meta: {
+                requiresAuth: true
+              }
+            }/*,
+            {
+              path: '/RegistroPaciente',
+              name: 'AdminRegister',
+              component: AdminRegister,
+              meta: {
+                requiresAuth: true
+              }
+            }*/
+          ]
+        }//END ADMIN
+        //=========================================
       ]
-    }
+    }//END HOME
+    //=========================================
   ]
 })
 
