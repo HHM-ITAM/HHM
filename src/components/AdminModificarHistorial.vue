@@ -137,7 +137,7 @@ export default {
       });
     },
     goBack () {
-      this.$router.push({name: 'MedicoMenu'});
+      this.$router.push({name: 'AdminMenu'});
     }
   }
 }

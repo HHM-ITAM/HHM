@@ -184,8 +184,8 @@ let router = new Router({
             },
             {
               path: '/ModificarHistorial',
-              name: 'AdminModificaHistorial',
-              component: AdminModificaHistorial,
+              name: 'AdminModificarHistorial',
+              component: AdminModificarHistorial,
               meta: {
                 requiresAuth: true
               }
