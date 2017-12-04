@@ -1,5 +1,5 @@
 <template>
-  <div class="admin-consulta-historial">
+  <div class="medico-modifica-historial">
     <div class="w3-card register-form">
       <button class="w3-btn w3-red regresar" @click.prevent="goBack">Regresar</button>  
       <header class="w3-container w3-blue header">
@@ -17,7 +17,8 @@
           <label for="fecha">Fecha:</label>
           <input type="text" name="fecha" id="fecha" v-model="historial.fecha" disabled>
           <label for="notas">Notas:</label>
-          <input type="text" name="notas" id="notas" v-model="historial.notas" disabled>
+          <input type="text" name="notas" id="notas" v-model="historial.notas">
+          <button class="w3-button w3-grey w3-text-white w3-right w3-round" @click.prevent="modificaHistorial">Revisar</button>
         </form>
       </div>
       <div class="w3-container form" v-if="!paciente">
@@ -55,13 +56,29 @@ export default {
     }
   },
   methods: {
+    modificaHistorial () {
+      let vm = this;
+      let user = vm.data;
+      let date = Date();
+      let ref = firebase.database().ref('Historiales/' + vm.paciente.uuid + '/').push();
+      let historial = {
+        doctor: user.uuid,
+        fecha: date,
+        notas: vm.historial.notas,
+        modified: vm.historial.key
+      }
+      ref.set(historial);
+      vm.goBack();
+    },
     revisa (hist) {
       let vm = this;
       let uid = vm.paciente.uuid;
+      vm.historial.id = hist.key;
       let db = firebase.database().ref('Historiales/' + uid + '/' + hist.key + '/');
       let ref = db.once('value')
       .then(snap => {
         vm.historial = snap.val();
+        vm.historial.key = hist.key;
         vm.busca = true;
       })
       .catch(error => {
@@ -69,20 +86,6 @@ export default {
         var errorMessage = error.message;
         vm.error = errorMessage;
       });
-    },
-    creaHistorial () {
-      let vm = this;
-      let user = vm.data;
-      let date = Date();
-      console.log(date);
-      let ref = firebase.database().ref('Historiales/' + vm.paciente.uuid + '/').push();
-      let historial = {
-        doctor: user.uuid,
-        fecha: date,
-        notas: vm.historial.notas
-      }
-      ref.set(historial);
-      vm.goBack();
     },
     buscaPaciente () {
       let db = firebase.database().ref('Pacientes/');
@@ -103,7 +106,7 @@ export default {
         });
         if(!vm.paciente) vm.error = 'No existe ese paciente';
         else {
-          vm.error = '';
+          vm.message = '';
           firebase.database().ref('Historiales').once('value')
           .then(snap => {
             snap.forEach(el => {
@@ -134,7 +137,7 @@ export default {
       });
     },
     goBack () {
-      this.$router.push({name: 'AdminMenu'});
+      this.$router.push({name: 'MedicoMenu'});
     }
   }
 }
@@ -142,7 +145,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.admin-consulta-historial{
+.medico-modifica-historial{
   margin: 0;
   padding: 0;
   height: 100%;

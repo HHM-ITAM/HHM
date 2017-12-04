@@ -42,7 +42,7 @@ export default {
       this.$router.push({name: 'AdminConsultaHistorial'});
     },
     goToModificaHistorial () {
-      this.$router.push({name: 'AdminModificaHistorial'});
+      this.$router.push({name: 'AdminModificarHistorial'});
     }
   },
   mounted () {
