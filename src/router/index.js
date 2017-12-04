@@ -20,6 +20,7 @@ import AdminModificarPaciente from '@/components/AdminModificarPaciente'
 import AdminRegisterMedico from '@/components/AdminRegisterMedico'
 import AdminModificarMedico from '@/components/AdminModificarMedico'
 import AdminCreaHistorial from '@/components/AdminCreaHistorial'
+import AdminConsultaHistorial from '@/components/AdminConsultaHistorial'
 
 import firebase from 'firebase'
 
@@ -168,6 +169,14 @@ let router = new Router({
               path: '/NuevoHistorial',
               name: 'AdminCreaHistorial',
               component: AdminCreaHistorial,
+              meta: {
+                requiresAuth: true
+              }
+            },
+            {
+              path: '/ConsultaHistorial',
+              name: 'AdminConsultaHistorial',
+              component: AdminConsultaHistorial,
               meta: {
                 requiresAuth: true
               }
