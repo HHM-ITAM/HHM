@@ -30,6 +30,8 @@ export default {
     //IF no user then redirect to Login
     if(!vm.user) this.$router.push({name: 'Login'});
     else{
+      //There is no data prop, return to home to reload prop
+      if(!vm.data) this.$router.push({name: 'Home'});
       firebase.database().ref('Historiales').once('value')
       .then(snap => {
         snap.forEach(el => {

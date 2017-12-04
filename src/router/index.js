@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/Login'
-import Register from '@/components/Register'
 import Home from '@/components/Home'
 import Paciente from '@/components/Paciente'
 import Medico from '@/components/Medico'
+import MedicoMenu from '@/components/MedicoMenu'
+import MedicoRegister from '@/components/MedicoRegister'
 import firebase from 'firebase'
 
 Vue.use(Router)
@@ -22,11 +23,6 @@ let router = new Router({
       component: Login
     },
     {
-      path: '/Registro',
-      name: 'Register',
-      component: Register
-    },
-    {
       path: '/Home',
       name: 'Home',
       component: Home,
@@ -34,15 +30,38 @@ let router = new Router({
         requiresAuth: true
       },
       children: [
+        //PACIENTE
         {
           path: '/Paciente',
           name: 'Paciente',
           component: Paciente
         },
+        //MEDICO
         {
           path: '/Medico',
           name: 'Medico',
-          component: Medico
+          component: Medico,
+          meta: {
+            requiresAuth: true
+          },
+          children: [
+            {
+              path: '/RegistroPaciente',
+              name: 'MedicoRegister',
+              component: MedicoRegister,
+              meta: {
+                requiresAuth: true
+              }
+            },
+            {
+              path: '/Menu',
+              name: 'MedicoMenu',
+              component: MedicoMenu,
+              meta: {
+                requiresAuth: true
+              }
+            }
+          ]
         }
       ]
     }

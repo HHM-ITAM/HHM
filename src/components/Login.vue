@@ -5,14 +5,13 @@
         <h1>Login</h1>
       </header>
       <div class="w3-container form">
-        <form @submit.prevent="addUser">
+        <form @submit.prevent="signIn">
           <p v-if="error" class="error">{{error}}</p>
           <label for="email">Email:</label>
           <input type="email" name="email" id="email" v-model="user.email">
           <label for="pass">Password</label>
           <input type="password" name="pass" id="pass" v-model="user.pass">
           <button type="submit" class="w3-btn w3-blue w3-block">Login</button>
-          <a @click.prevent="goToRegister">Aún sin cuenta, crea una.</a>
         </form>
       </div>
     </div>
@@ -34,7 +33,7 @@ export default {
     }
   },
   methods: {
-    addUser () {
+    signIn () {
       let vm = this;
       firebase.auth().signInWithEmailAndPassword(vm.user.email, vm.user.pass)
       .then((user) => vm.$router.push({name: 'Home'}))
@@ -45,9 +44,6 @@ export default {
         vm.error = errorMessage;
         vm.user.pass = '';
       });
-    },
-    goToRegister () {
-      this.$router.push({name: 'Register'});
     }
   }
 }

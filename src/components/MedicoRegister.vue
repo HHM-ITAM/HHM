@@ -1,6 +1,7 @@
 <template>
   <div class="register">
-    <div class="w3-card register-form">  
+    <div class="w3-card register-form">
+      <button class="w3-btn w3-red regresar" @click.prevent="goBack">Regresar</button>  
       <header class="w3-container w3-blue header">
         <h1>Registro</h1>
       </header>
@@ -11,8 +12,8 @@
           <input type="email" name="email" id="email" v-model="user.email">
           <label for="pass">Password</label>
           <input type="password" name="pass" id="pass" v-model="user.pass">
-          <button type="submit" class="w3-btn w3-blue w3-block">Registrarse</button>
-          <a @click.prevent="goToLogin">Ya tengo una cuenta.</a>
+          <button type="submit" class="w3-btn w3-blue w3-block">Registrar Paciente</button>
+          <!--<a @click.prevent="goToLogin">Ya tengo una cuenta.</a>-->
         </form>
       </div>
     </div>
@@ -46,7 +47,10 @@ export default {
           email: user.email
         };
         ref.set(paciente);
-        this.$router.push({name: 'Home'});
+        db = firebase.database().ref('Usuarios/');
+        ref = db.push('Usuarios');
+        ref.set(paciente);
+        vm.goBack();
         })
       .catch(function(error) {
         // Handle Errors here.
@@ -56,8 +60,8 @@ export default {
         vm.user.pass = '';
       });
     },
-    goToLogin () {
-      this.$router.push({name : 'Login'});
+    goBack () {
+      this.$router.push({name: 'MedicoMenu'});
     }
   }
 }
@@ -74,7 +78,12 @@ export default {
   justify-content: center;
   background-color: lightgrey;
 }
-
+.regresar{
+  position: absolute;
+  height: 30px;
+  top: 45px;
+  left: 0;
+}
 .register-form{
   background-color: white;
   align-self: center;

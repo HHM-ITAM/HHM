@@ -29,9 +29,6 @@ export default {
         this.$router.push({name: 'Login'});
       })
       .catch((error) => this.logOut());
-    },
-    checkType (type) {
-
     }
   },
   mounted () {
@@ -40,12 +37,18 @@ export default {
     //IF no user then redirect to Login
     if(!vm.user) this.$router.push({name: 'Login'});
     else {
-      firebase.database().ref('Pacientes').once('value')
+      let found = false;
+      firebase.database().ref('Usuarios').once('value')
       .then(snap => {
         snap.forEach(el => {
-          let data = el.val();
-          if(data.uuid === vm.user.uid) vm.data = data;
-          else vm.data = null;
+          if(!found){
+            let data = el.val();
+            if(data.uuid === vm.user.uid){
+              vm.data = data;
+              found = true;
+            }
+            else vm.data = null;
+          }
         });
         //No database record !SOMETHING IS WRONG!
         if(!vm.data) console.log('Call the bomberos')
@@ -55,6 +58,9 @@ export default {
             //PACIENTE
             case 'p':
               vm.$router.push({name: 'Paciente'});
+              break;
+            case 'm':
+              vm.$router.push({name: 'Medico'});
               break;
           }
         }
