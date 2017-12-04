@@ -35,9 +35,19 @@ export default {
   },
   methods: {
     addUser () {
+      let db = firebase.database().ref('Pacientes/');
       let vm = this;
       firebase.auth().createUserWithEmailAndPassword(vm.user.email, vm.user.pass)
-      .then(user => this.$router.push({name: 'Home'}))
+      .then(user => {
+        let ref = db.push('Pacientes');
+        let paciente = {
+          uuid : user.uid,
+          type: 'p',
+          email: user.email
+        };
+        ref.set(paciente);
+        this.$router.push({name: 'Home'});
+        })
       .catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;

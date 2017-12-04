@@ -1,11 +1,5 @@
 <template>
-  <div class="home">
-    <div class="w3-top navbar">
-      <div class="w3-bar w3-blue nabvar">
-        <a class="w3-bar-item w3-button link">{{user.email}}</a>
-        <a class="w3-bar-item w3-button w3-right link" @click.prevent="logOut">Salir</a>
-      </div>
-    </div>
+  <div class="paciente">
     <div class="historiales">
       <div class="historial w3-border w3-border-grey">
         <p class="w3-left">Fecha</p>
@@ -26,14 +20,6 @@ export default {
     }
   },
   methods: {
-    logOut () {
-      firebase.auth().signOut()
-      .then(() => {
-        console.log('SignOut');
-        this.$router.push({name: 'Login'});
-      })
-      .catch((error) => this.logOut());
-    }
   },
   mounted () {
     this.user = firebase.auth().currentUser;
