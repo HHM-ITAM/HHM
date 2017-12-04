@@ -4,6 +4,7 @@ import Login from '@/components/Login'
 import Register from '@/components/Register'
 import Home from '@/components/Home'
 import Paciente from '@/components/Paciente'
+import Medico from '@/components/Medico'
 import firebase from 'firebase'
 
 Vue.use(Router)
@@ -37,6 +38,11 @@ let router = new Router({
           path: '/Paciente',
           name: 'Paciente',
           component: Paciente
+        },
+        {
+          path: '/Medico',
+          name: 'Medico',
+          component: Medico
         }
       ]
     }

@@ -6,7 +6,7 @@
         <a class="w3-bar-item w3-button w3-right link" @click.prevent="logOut">Salir</a>
       </div>
     </div>
-    <router-view/>
+    <router-view :data="data"/>
   </div>
 </template>
 
@@ -18,7 +18,7 @@ export default {
   data () {
     return {
       user : {},
-      data: {}
+      data: null
     }
   },
   methods: {
@@ -29,6 +29,9 @@ export default {
         this.$router.push({name: 'Login'});
       })
       .catch((error) => this.logOut());
+    },
+    checkType (type) {
+
     }
   },
   mounted () {
@@ -43,18 +46,18 @@ export default {
           let data = el.val();
           if(data.uuid === vm.user.uid) vm.data = data;
           else vm.data = null;
-          //No database record !SOMETHING IS WRONG!
-          if(!vm.data) console.log('Call the bomberos')
-          //Look for type of user
-          else {
-            switch(vm.data.type){
-              //PACIENTE
-              case 'p':
-                vm.$router.push({name: 'Paciente'});
-                break;
-            }
-          }
         });
+        //No database record !SOMETHING IS WRONG!
+        if(!vm.data) console.log('Call the bomberos')
+        //Look for type of user
+        else {
+          switch(vm.data.type){
+            //PACIENTE
+            case 'p':
+              vm.$router.push({name: 'Paciente'});
+              break;
+          }
+        }
       })
       .catch(error => console.log(error.message));
     }

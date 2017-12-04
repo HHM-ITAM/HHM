@@ -1,3 +1,3 @@
 1.- Login => checkUserType => RedirectToHome - OK
-2.- Register => addTypeToAccount => RedirectToHome 
-2.- Make home for every user
+2.- Register => addTypeToAccount => RedirectToHome - OK
+2.- Make home for every user - {Paciente: OK, Medico: NOT, Admin: Not}

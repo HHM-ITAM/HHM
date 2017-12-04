@@ -1,5 +1,5 @@
 <template>
-  <div class="paciente">
+  <div class="medico">
     <p v-if="message" class="message">{{message}}</p>
     <div class="historiales">
       <div class="historial w3-border w3-border-grey" v-for="(historial, index) in historiales" :key="index">
@@ -14,7 +14,7 @@
 import firebase from 'firebase';
 
 export default {
-  name: 'Paciente',
+  name: 'Medico',
   props: ['data'],
   data () {
     return {
