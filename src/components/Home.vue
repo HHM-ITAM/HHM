@@ -12,6 +12,8 @@ export default {
   methods: {
   },
   mounted () {
+    let currentUser = firebase.auth().currentUser;
+    if(!currentUser) this.$router.push({name: 'Login'});
     let vm = this;
     console.log('Signed In');
     firebase.auth().signOut()
