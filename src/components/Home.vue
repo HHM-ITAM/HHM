@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <h1>HOME</h1>
-    <button @click.prevent="logOut"></button>
+    <button @click.prevent="logOut">LogOut</button>
   </div>
 </template>
 
@@ -13,7 +13,10 @@ export default {
   methods: {
     logOut () {
       firebase.auth().signOut()
-      .then(() => this.$router.push({name: 'Login'}))
+      .then(() => {
+        console.log('SignOut');
+        this.$router.push({name: 'Login'});
+      })
       .catch((error) => this.logOut());
     }
   },
@@ -22,11 +25,6 @@ export default {
     if(!currentUser) this.$router.push({name: 'Login'});
     let vm = this;
     console.log('Signed In');
-    firebase.auth().signOut()
-    .then(() => {
-      console.log('Signed Out');
-      this.$router.push({name: 'Login'});
-    })
   }
 }
 </script>
@@ -38,8 +36,6 @@ export default {
   padding: 0;
   height: 100%;
   width: 100%;
-  display: flex;
-  justify-content: center;
 }
 
 </style>
