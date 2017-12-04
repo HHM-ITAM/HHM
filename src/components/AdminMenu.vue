@@ -36,13 +36,13 @@ export default {
       this.$router.push({name: 'AdminModificarMedico'});
     },
     goToCrearHistorial () {
-      this.$router.push({name: 'MedicoCreaHistorial'});
+      this.$router.push({name: 'AdminCreaHistorial'});
     },
     goToConsultaHistorial () {
-      this.$router.push({name: 'MedicoConsultaHistorial'});
+      this.$router.push({name: 'AdminConsultaHistorial'});
     },
     goToModificaHistorial () {
-      this.$router.push({name: 'MedicoModificaHistorial'});
+      this.$router.push({name: 'AdminModificaHistorial'});
     }
   },
   mounted () {
