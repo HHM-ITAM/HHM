@@ -17,6 +17,8 @@ import Admin from '@/components/Admin'
 import AdminMenu from '@/components/AdminMenu'
 import AdminRegisterPaciente from '@/components/AdminRegisterPaciente'
 import AdminModificarPaciente from '@/components/AdminModificarPaciente'
+import AdminRegisterMedico from '@/components/AdminRegisterMedico'
+import AdminModificarMedico from '@/components/AdminModificarMedico'
 
 import firebase from 'firebase'
 
@@ -141,6 +143,22 @@ let router = new Router({
               path: '/MoficaPaciente',
               name: 'AdminModificarPaciente',
               component: AdminModificarPaciente,
+              meta: {
+                requiresAuth: true
+              }
+            },
+            {
+              path: '/RegistroMedico',
+              name: 'AdminRegisterMedico',
+              component: AdminRegisterMedico,
+              meta: {
+                requiresAuth: true
+              }
+            },
+            {
+              path: '/MoficaMedico',
+              name: 'AdminModificarMedico',
+              component: AdminModificarMedico,
               meta: {
                 requiresAuth: true
               }
