@@ -13,7 +13,7 @@
 import firebase from 'firebase';
 
 export default {
-  name: 'Home',
+  name: 'Paciente',
   data () {
     return {
       user : {}
@@ -22,19 +22,32 @@ export default {
   methods: {
   },
   mounted () {
-    this.user = firebase.auth().currentUser;
-    if(!user) this.$router.push({name: 'Login'});
     let vm = this;
-    console.log('Signed In');
+    vm.user = firebase.auth().currentUser;
+    //IF no user then redirect to Login
+    if(!vm.user) this.$router.push({name: 'Login'});
+    else{
+      firebase.database().ref('Pacientes').once('value')
+      .then(snap => {
+        snap.forEach(el => {
+          let data = el.val();
+          if(data.uuid === vm.user.uid) vm.data = data;
+          else vm.data = null;
+          //No database record !SOMETHING IS WRONG!
+          if(!vm.data) console.log('Call the bomberos')
+        });
+      })
+      .catch(error => console.log(error.message));
+    }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.home{
+.paciente{
   margin: 0;
-  padding: 45px 0 0;
+  padding: 0;
   height: 100%;
   width: 100%;
 }

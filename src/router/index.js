@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
 import Home from '@/components/Home'
+import Paciente from '@/components/Paciente'
 import firebase from 'firebase'
 
 Vue.use(Router)
@@ -30,7 +31,14 @@ let router = new Router({
       component: Home,
       meta: {
         requiresAuth: true
-      }
+      },
+      children: [
+        {
+          path: '/Paciente',
+          name: 'Paciente',
+          component: Paciente
+        }
+      ]
     }
   ]
 })

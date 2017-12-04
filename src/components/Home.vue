@@ -6,12 +6,7 @@
         <a class="w3-bar-item w3-button w3-right link" @click.prevent="logOut">Salir</a>
       </div>
     </div>
-    <div class="historiales">
-      <div class="historial w3-border w3-border-grey">
-        <p class="w3-left">Fecha</p>
-        <button class="w3-button w3-grey w3-text-white w3-right w3-round">Revisar</button>
-      </div>
-    </div>
+    <router-view/>
   </div>
 </template>
 
@@ -22,7 +17,8 @@ export default {
   name: 'Home',
   data () {
     return {
-      user : {}
+      user : {},
+      data: {}
     }
   },
   methods: {
@@ -36,10 +32,32 @@ export default {
     }
   },
   mounted () {
-    this.user = firebase.auth().currentUser;
-    if(!user) this.$router.push({name: 'Login'});
     let vm = this;
-    console.log('Signed In');
+    vm.user = firebase.auth().currentUser;
+    //IF no user then redirect to Login
+    if(!vm.user) this.$router.push({name: 'Login'});
+    else {
+      firebase.database().ref('Pacientes').once('value')
+      .then(snap => {
+        snap.forEach(el => {
+          let data = el.val();
+          if(data.uuid === vm.user.uid) vm.data = data;
+          else vm.data = null;
+          //No database record !SOMETHING IS WRONG!
+          if(!vm.data) console.log('Call the bomberos')
+          //Look for type of user
+          else {
+            switch(vm.data.type){
+              //PACIENTE
+              case 'p':
+                vm.$router.push({name: 'Paciente'});
+                break;
+            }
+          }
+        });
+      })
+      .catch(error => console.log(error.message));
+    }
   }
 }
 </script>
