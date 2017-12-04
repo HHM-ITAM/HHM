@@ -1,8 +1,10 @@
 <template>
   <div class="admin-menu">
     <div class="opciones w3-padding">
-      <button class="w3-btn w3-green opcion w3-round" @click.prevent="goToRegister">Registrar Paciente</button>
-      <button class="w3-btn w3-grey w3-text-white opcion w3-round" @click.prevent="goToModificar">Modificar Paciente</button>
+      <button class="w3-btn w3-green opcion w3-round" @click.prevent="goToRegisterPaciente">Registrar Paciente</button>
+      <button class="w3-btn w3-grey w3-text-white opcion w3-round" @click.prevent="goToModificarPaciente">Modificar Paciente</button>
+      <button class="w3-btn w3-green opcion w3-round" @click.prevent="goToRegisterMedico">Registrar Medico</button>
+      <button class="w3-btn w3-grey w3-text-white opcion w3-round" @click.prevent="goToModificarMedico">Modificar Medico</button>
       <button class="w3-btn w3-green opcion w3-round" @click.prevent="goToCrearHistorial">Nuevo Historial</button>
       <button class="w3-btn w3-grey w3-text-white opcion w3-round" @click.prevent="goToConsultaHistorial">Consulta Historial</button>
       <button class="w3-btn w3-green opcion w3-round" @click.prevent="goToModificaHistorial">Modifica Historial</button>
@@ -21,11 +23,17 @@ export default {
     }
   },
   methods: {
-    goToRegister () {
-      this.$router.push({name: 'MedicoRegister'});
+    goToRegisterPaciente () {
+      this.$router.push({name: 'AdminRegisterPaciente'});
     },
-    goToModificar () {
-      this.$router.push({name: 'MedicoModificar'});
+    goToModificarPaciente () {
+      this.$router.push({name: 'AdminModificarPaciente'});
+    },
+    goToRegisterMedico () {
+      this.$router.push({name: 'AdminRegisterMedico'});
+    },
+    goToModificarMedico () {
+      this.$router.push({name: 'AdminModificarMedico'});
     },
     goToCrearHistorial () {
       this.$router.push({name: 'MedicoCreaHistorial'});

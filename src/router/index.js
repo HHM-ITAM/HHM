@@ -15,6 +15,7 @@ import MedicoModificaHistorial from '@/components/MedicoModificaHistorial'
 //ADMIN
 import Admin from '@/components/Admin'
 import AdminMenu from '@/components/AdminMenu'
+import AdminRegisterPaciente from '@/components/AdminRegisterPaciente'
 
 import firebase from 'firebase'
 
@@ -126,16 +127,15 @@ let router = new Router({
               meta: {
                 requiresAuth: true
               }
-            }/*,
+            },
             {
               path: '/RegistroPaciente',
-              name: 'AdminRegister',
-              component: AdminRegister,
+              name: 'AdminRegisterPaciente',
+              component: AdminRegisterPaciente,
               meta: {
                 requiresAuth: true
               }
-            }*/
-          ]
+            }          ]
         }//END ADMIN
         //=========================================
       ]
